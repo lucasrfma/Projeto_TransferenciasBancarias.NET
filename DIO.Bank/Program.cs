@@ -8,6 +8,8 @@ namespace DIO.Bank
         static List<Conta> listContas = new List<Conta>();
         static void Main(string[] args)
         {   
+            CarregaListaContas();
+
             string opcaoUsuario = ObterOpcaoUsuario();;
             while(opcaoUsuario != "X"){
                 switch (opcaoUsuario)
@@ -36,8 +38,62 @@ namespace DIO.Bank
                 }
                 opcaoUsuario = ObterOpcaoUsuario();
             }
-            Console.WriteLine("Obrigado por utilizar nossos serviços!");
+            Console.WriteLine("Pode desligar o sistema!");
             Console.ReadLine();
+        }
+
+        private static bool GravarListaContas()
+        {
+            if( listContas.Count == 0 )
+            {
+                Console.WriteLine($"Nenhuma conta cadastrada.");
+                return false;
+            }
+            Console.WriteLine($"Gravando lista de contas...");
+
+            List<string> ContasParaGravar = new List<string>();
+            for (int i = 0; i < listContas.Count ; i++)
+            {
+                ContasParaGravar.Add(listContas[i].ToStringSimples());
+            }
+
+            try
+            {
+                System.IO.File.WriteAllLines(".\\Dados\\ListaContas.txt",ContasParaGravar);
+                return true;
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine($"Erro ao gravar.");
+                return false;
+            }
+        } 
+
+        private static void CarregaListaContas()
+        {
+            try{
+                string[] dadosBrutos = System.IO.File.ReadAllLines(".\\Dados\\ListaContas.txt");
+                for( int i = 0; i < dadosBrutos.Length; i=i+5)
+                {
+                    long numeroConta = int.Parse(dadosBrutos[i]);
+                    string nome = dadosBrutos[i+1];
+                    TipoConta tipoConta = Enum.Parse<TipoConta>(dadosBrutos[i+2]);
+                    double saldo = double.Parse(dadosBrutos[i+3]);
+                    double credito = double.Parse(dadosBrutos[i+4]);
+
+                    Conta novaConta = new Conta( numeroConta: numeroConta,
+                                                nome: nome,
+                                                tipoConta: tipoConta,
+                                                saldo: saldo,
+                                                credito: credito);
+                    listContas.Add(novaConta);
+                }
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine($"Registro de contas não encontrado.{Environment.NewLine}Um registro será iniciado caso haja adição de contas.");
+                return;
+            }
         }
 
         // Modifiquei para usar o atributo "NumeroConta"
@@ -52,6 +108,8 @@ namespace DIO.Bank
             double valorDeposito = double.Parse(Console.ReadLine());
 
             listContas.Find( i => i.getNumeroConta().Equals(numeroConta)).Depositar(valorDeposito);
+
+            GravarListaContas();
         }
 
         private static void Sacar()
@@ -63,6 +121,8 @@ namespace DIO.Bank
             double valorSaque = double.Parse(Console.ReadLine());
 
             listContas.Find( i => i.getNumeroConta().Equals(numeroConta)).Sacar(valorSaque);
+
+            GravarListaContas();
         }
 
         private static void Transferir()
@@ -79,6 +139,8 @@ namespace DIO.Bank
             listContas.Find( i => i.getNumeroConta().
                                 Equals(contaOrigem)).
                 Transferir(valorTransf,listContas.Find( j => j.getNumeroConta().Equals(contaDestino)));
+
+            GravarListaContas();
 
         }
 
@@ -115,11 +177,13 @@ namespace DIO.Bank
             Conta novaConta = new Conta( (TipoConta)tipoConta,saldo,credito,nomeCliente);
 
             listContas.Add(novaConta);
+
+            GravarListaContas();
         }
 
         private static string ObterOpcaoUsuario()
         {
-            Console.WriteLine($"{Environment.NewLine}DIO Bank a seu dispor!!!" +
+            Console.WriteLine($"{Environment.NewLine}DIO Bank - Interface Gerente" +
                               $"{Environment.NewLine}Informe a opção desejada: " + 
                               $"{Environment.NewLine}" + 
                               $"{Environment.NewLine} 1 - Listar contas" + 

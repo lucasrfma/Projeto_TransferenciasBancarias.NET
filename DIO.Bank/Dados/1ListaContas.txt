@@ -1,0 +1,10 @@
+1
+Lucas Romero
+PessoaFisica
+1,500.00
+1,000.00
+2
+Marmitaria da Mama
+PessoaJuridica
+990.00
+1,200.00

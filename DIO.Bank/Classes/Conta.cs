@@ -20,6 +20,16 @@ namespace DIO.Bank
             this.Nome = nome;
             this.NumeroConta = ++Ultimo;
         }
+        public Conta(TipoConta tipoConta, double saldo, double credito, string nome, long numeroConta)
+        {
+            this.TipoConta = tipoConta;
+            this.Saldo = saldo;
+            this.Credito = credito;
+            this.Nome = nome;
+            this.NumeroConta = numeroConta;
+            if( Ultimo < numeroConta)
+                Ultimo = numeroConta;
+        }
 
         // Função para ver saldo. Reutilizada nas funções Sacar e Depositar.
         public void verSaldo()
@@ -74,6 +84,15 @@ namespace DIO.Bank
             $"{System.Environment.NewLine}" + "Tipo da conta: " + TipoConta +
             $"{System.Environment.NewLine}" + "Saldo        : " + Saldo.ToString("N2") +
             $"{System.Environment.NewLine}" + "Crédito      : " + Credito.ToString("N2");
+            return retorno;
+        }
+        public string ToStringSimples()
+        {
+            string retorno =                + NumeroConta + 
+            $"{System.Environment.NewLine}" + Nome +
+            $"{System.Environment.NewLine}" + TipoConta +
+            $"{System.Environment.NewLine}" + Saldo.ToString("N2") +
+            $"{System.Environment.NewLine}" + Credito.ToString("N2");
             return retorno;
         }
 
