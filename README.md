@@ -27,6 +27,7 @@ Algumas modificações/melhorias feitas:
         
  Melhorias/expansões possíveis:
  
+  - Salvar informações das contas em um arquivo local, ler as informações desse arquivo ao iniciar.
   - Realizar validação de input, como sugerido nos vídeos
   - Criação de um programa usuário (Em oposição à classe Program atual, que é voltado para uso por um gerente do banco
      - (Apesar de ser voltado para uso por gerentes, a linguagem é como se estivesse falando com um cliente, isso pode ser modificado também... mas não seria algo relacionado a praticar programação...)
