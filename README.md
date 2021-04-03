@@ -21,13 +21,12 @@ Algumas modificações/melhorias feitas:
         - Desvantagem: Ocupa muito espaço quando "ListaContas()" da classe Program é chamada;
         - Vantagem: Cada conta impressa é mais legível.
  - Classe Program:
-    - Modificado modo de identificação das contas relevantes nos métodos Depositar, Sacar e Transferir;
+    - Adicionados métodos para salvar informações em um arquivo, e ler informações do mesmo, assim mantendo os dados entre sessões;
+    - Modificado modo de identificação das contas relevantes nos métodos Depositar, Sacar e Transferir.
         - Agora faz uso do atributo NumeroConta da classe Conta;
         - Vantagem: Permite que contas sejam identificadas corretamente mesmo caso uma conta seja excluída, ou a forma de armazenamento das contas mude.
         
  Melhorias/expansões possíveis:
  
-  - Salvar informações das contas em um arquivo local, ler as informações desse arquivo ao iniciar.
   - Realizar validação de input, como sugerido nos vídeos
   - Criação de um programa usuário (Em oposição à classe Program atual, que é voltado para uso por um gerente do banco
-     - (Apesar de ser voltado para uso por gerentes, a linguagem é como se estivesse falando com um cliente, isso pode ser modificado também... mas não seria algo relacionado a praticar programação...)
